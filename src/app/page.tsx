@@ -54,13 +54,18 @@ export default function ZuhunainHome() {
   }, [messages]);
 
   const handleAdminLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (passcode === 'admin2026') {
-      router.push('/admin');
-    } else {
-      alert('Access Denied: Invalid Administrative Credentials');
-    }
-  };
+  e.preventDefault();
+  
+  // Logic updated to use Environment Variable
+  const secureKey = process.env.NEXT_PUBLIC_ZU_ADMIN_KEY;
+
+  if (passcode === secureKey) {
+    router.push('/admin');
+  } else {
+    // Keeping our specific error message for consistency
+    alert('Access Denied: Invalid Administrative Credentials');
+  }
+};
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
